@@ -1,0 +1,31 @@
+
+<div ng-controller='sessionController'>
+  <div class="nav">
+    <h1>Full MEAN Wall</h1>
+    <h3>Welcome {{session_user}}</h3>
+    <a href="/logout">Logout</a>
+  </div>
+  <h3>Post a message:</h3>
+  <form ng-submit='message()'>
+		<input type='textarea' ng-model='newMessage.content'>
+		<input type='submit' value='Post a Message'>
+	</form>
+   <ul>
+     <li ng-repeat='message in messages | orderBy:"-createdAt"'>
+      {{message._user.name}}
+      {{message.createdAt|date:'MMM dd y'}}<br>
+      {{message.content}}
+      <ul>
+        <li ng-repeat='comment in message.comments | orderBy:"-createdAt"'>
+          {{comment._user.name}}
+          {{comment.createdAt|date:'MMM dd y'}}<br>
+          {{comment.text}}
+        </li>
+      </ul>
+      <form ng-submit='comment(message._id, newComment)'>
+        <input type='textarea' ng-model='newComment.text'>
+    		<input type='submit' value='Post a Comment'>
+      </form>
+     </li>
+   </ul>
+</div> <!-- end of controller -->
